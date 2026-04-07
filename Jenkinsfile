@@ -1,6 +1,16 @@
-// Define the URL of the Artifactory registry
-def registry = 'https://trialcn8cgy.jfrog.io/'
+678286d01c989a6054121859fd203d0b3dda1ee6
 
+[root@ip-172-31-31-204 saidemytrend]# cat sonar-project.properties
+sonar.verbose=true
+sonar.organization=saidemy01-mykey
+sonar.projectKey=saidemy01-mykey_saidemytrend
+sonar.projectName=saidemytrend
+sonar.language=java
+sonar.sourceEncoding=UTF-8
+sonar.sources=.
+sonar.java.binaries=target/classes
+sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+===============
 pipeline {
     agent any
 
@@ -38,31 +48,5 @@ pipeline {
             }
         }
 
-        stage("Jar Publish") {
-            steps {
-                script {
-                    echo '<--------------- Jar Publish Started --------------->'
-                    def server = Artifactory.newServer url: registry + "/artifactory", credentialsId: "artifact-cred"
-                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
-                    def uploadSpec = """{
-                          "files": [
-                            {
-                              "pattern": "jarstaging/(*)",
-                              "target": "sai-libs-release-local/{1}",
-                              "flat": "false",
-                              "props": "${properties}",
-                              "exclusions": [ "*.sha1", "*.md5"]
-                            }
-                         ]
-                     }"""
-                    def buildInfo = server.upload(uploadSpec)
-                    buildInfo.env.collect()
-                    server.publishBuildInfo(buildInfo)
-                    echo '<--------------- Jar Publish Ended --------------->'
-                }
-            }
-        }
-
     }
 }
-
