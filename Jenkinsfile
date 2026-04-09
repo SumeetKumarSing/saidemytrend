@@ -1,16 +1,3 @@
-678286d01c989a6054121859fd203d0b3dda1ee6
-
-[root@ip-172-31-31-204 saidemytrend]# cat sonar-project.properties
-sonar.verbose=true
-sonar.organization=saidemy01-mykey
-sonar.projectKey=saidemy01-mykey_saidemytrend
-sonar.projectName=saidemytrend
-sonar.language=java
-sonar.sourceEncoding=UTF-8
-sonar.sources=.
-sonar.java.binaries=target/classes
-sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-===============
 pipeline {
     agent any
 
