@@ -1,6 +1,5 @@
 // Define the URL of the Artifactory registry
-def registry = 'https://trialryshrf.jfrog.io/'
-
+def registry = 'https://trialcn8cgy.jfrog.io/'
 
 pipeline {
     agent any
@@ -23,17 +22,17 @@ pipeline {
             steps {
                 echo "----------- unit test started ----------"
                 sh 'mvn surefire-report:report'
-                echo "----------- unit test completed -----------"
+                echo "----------- unit test completed ----------"
             }
         }
 
         stage('SonarQube analysis') {
             environment {
-                scannerHome = tool 'my-sonar-server'
+                scannerHome = tool 'saidemy-sonar-scanner'
             }
 
             steps {
-                withSonarQubeEnv('sonar-url') {
+                withSonarQubeEnv('saidemy-sonarqube-server') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
@@ -49,7 +48,7 @@ pipeline {
                           "files": [
                             {
                               "pattern": "jarstaging/(*)",
-                              "target": "sai-libs-release-local//{1}",
+                              "target": "sai-libs-release-local/{1}",
                               "flat": "false",
                               "props": "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
