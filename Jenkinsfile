@@ -2,7 +2,10 @@
 def registry = 'https://trialcn8cgy.jfrog.io/'
 
 pipeline {
-    agent any
+    agent {
+
+	label 'ex-slave'
+    }
 
     environment {
         PATH = "/opt/maven/bin:$PATH"
